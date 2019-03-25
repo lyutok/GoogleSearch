@@ -30,7 +30,7 @@ namespace Selenium
             // Act
             Google googlepage = new Google(driver);
             googlepage.search.SendKeys("Selenium 3");
-            // driver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(1000);
+            googlepage.driver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(1000);
 
             googlepage.searchButton.Click();
         }
