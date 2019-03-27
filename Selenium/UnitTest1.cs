@@ -7,6 +7,7 @@ namespace Selenium
    
     public class UnitTest1
     {
+        // Assert
         public IWebDriver driver;
 
         [SetUp]
@@ -29,10 +30,35 @@ namespace Selenium
         {
             // Act
             Google googlepage = new Google(driver);
-            googlepage.search.SendKeys("Selenium 3");
-            googlepage.driver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(1000);
-
+            googlepage.searchPanel.SendKeys("Selenium 3");
             googlepage.searchButton.Click();
+            googlepage.seleniumLink.Click();
+            
+            // Assert
+            Assert.True(IsElementPresent(googlepage.seleniumClass),
+                $"seleniumClass {nameof(googlepage.seleniumClass)}' is not present on the page.");
+
+        bool IsElementPresent(IWebElement element)
+        {
+                 SetImplicitTimeOut(driver, 2);
+            try
+            {
+                var result = element.Displayed;
+                // SetImplicitTimeOut(driver, 10);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+               // SetImplicitTimeOut(driver, 10);
+                return false;
+            }
+            throw new System.Exception("Unexpected exception.");
+        }
+
+            void SetImplicitTimeOut(IWebDriver driver, int timeout)
+            {
+                driver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(timeout);
+            }
         }
     }
 }
